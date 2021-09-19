@@ -4,9 +4,9 @@ const db = require('./database/db')
 //--------------routes-----------------
 
 
-//Tabla de los nombres y sus meetings
+        //Lista de meetings
 routes.get('/',(req, res)=>{
-    let query = "select M.meetingId, U.name, M.meetingTime from users U INNER JOIN meetings M on  M.userId =  U.userId"
+    let query = "SELECT M.meetingId, U.name, M.meetingTime FROM users U INNER JOIN meetings M on  M.userId =  U.userId"
     db.query(query,(err, rows, req)=>{
         if (err) {
             throw err;
@@ -15,10 +15,10 @@ routes.get('/',(req, res)=>{
     })
 
 }) 
-//Tabla de los nombres y sus meetings
+        // lista de meet por id
 routes.get('/:id',(req, res)=>{
     const { id } = req.params;
-    let query = "select meeetingId, meetingTime from meetings where user_id = ?"; 
+    let query = "SELECT meetingId, meetingTime FROM meetings WHERE userId = ?"; 
     db.query(query,[id],(err, rows, req)=>{
         if (err) {
             throw err;
@@ -27,32 +27,34 @@ routes.get('/:id',(req, res)=>{
     })
 
 }) 
-//Tabla de los nombres y sus meetings
-routes.get('/',(req, res)=>{
-    let query = "select M.meetingId, U.name, M.meetingTime from users U INNER JOIN meetings M on  M.userId =  U.userId"
+        // Delete meeting
+routes.delete('/:id',(req, res)=>{
+    const { id } = req.params;
+    let query = "DELETE FROM meetings where meetingId = ?"
+    db.query(query,[id],(err, rows, req)=>{
+        if (err) {
+            throw err;
+        }
+        res.json('Meeting eliminada')
+    })
+
+}) 
+        // agregar meetings
+routes.post('/agregar',(req, res)=>{
+    const { meetingId, meetingTime, availableTime, userId } = req.body
+    let query = `INSERT INTO meetings VALUES ('${meetingId}','${meetingTime}','${availableTime}','${userId}')`
     db.query(query,(err, rows, req)=>{
         if (err) {
             throw err;
         }
-        res.json(rows)
+        res.json("Meeting creada")
     })
 
 }) 
-//Tabla de los nombres y sus meetings
+        // Meetings libres
 routes.get('/',(req, res)=>{
-    let query = "select M.meetingId, U.name, M.meetingTime from users U INNER JOIN meetings M on  M.userId =  U.userId"
-    db.query(query,(err, rows, req)=>{
-        if (err) {
-            throw err;
-        }
-        res.json(rows)
-    })
-
-}) 
-//Tabla de los nombres y sus meetings
-routes.get('/',(req, res)=>{
-    let query = "select M.meetingId, U.name, M.meetingTime from users U INNER JOIN meetings M on  M.userId =  U.userId"
-    db.query(query,(err, rows, req)=>{
+    let query = "Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId and (M.availableTime Between ? and ?) and (M.availableTime Between '08:00' and '17:00') and (M.availableTime not Between '12:00' and '13:00'))"
+    db.query(query,[req.body.start, req.body.end],(err, rows, req)=>{
         if (err) {
             throw err;
         }

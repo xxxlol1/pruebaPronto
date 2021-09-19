@@ -3,13 +3,17 @@ require('./database/db');
 
 const express = require('express');
 
+
 const port = (process.env.port || 3000);
 
 const app = express();
 
+app.use(express.json())
+
 app.set('port',port)
 
 app.use('/api', require('./rutas'))
+
 
 app.listen(app.get('port'),(error)=>{
 
