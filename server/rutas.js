@@ -52,9 +52,11 @@ routes.post('/agregar',(req, res)=>{
 
 }) 
         // Meetings libres
-routes.get('/',(req, res)=>{
-    let query = "Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId and (M.availableTime Between ? and ?) and (M.availableTime Between '08:00' and '17:00') and (M.availableTime not Between '12:00' and '13:00'))"
-    db.query(query,[req.body.start, req.body.end],(err, rows, req)=>{
+routes.get('/xd',(req, res)=>{
+   // const {inicia} = req.body.start;
+   // const {termina} = req.body.end;
+    let query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId and (M.availableTime Between '${meetingId}' and '${meetingTime}') and (M.availableTime Between '08:00' and '17:00') and (M.availableTime not Between '12:00' and '13:00'))`
+    db.query(query,(err, rows, req)=>{
         if (err) {
             throw err;
         }
@@ -65,3 +67,4 @@ routes.get('/',(req, res)=>{
 
 module.exports = routes;
 
+//
