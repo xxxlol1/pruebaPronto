@@ -6,7 +6,7 @@ import { Time } from '@angular/common';
   providedIn: 'root'
 })
 export class ServiceService {
-  url = "/api";
+  url = '/api';
   constructor(private http: HttpClient) { }
 
   //Get meetings

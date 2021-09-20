@@ -1,23 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {ServiceService,Meeting} from '../../service/service.service';
-import { Router} from '@angular/router';
 
 @Component({
-  selector: 'app-inicio',
-  templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.css']
+  selector: 'app-index',
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.css']
 })
-export class InicioComponent implements OnInit {
+export class IndexComponent implements OnInit {
 
- // ListMeeting: Meeting[] = [];
+  ListMeeting: Meeting[] = [];
+
 
   constructor(private ServiceService:ServiceService, private router:Router) { }
 
   ngOnInit(): void {
-   // this.listMeeting();
-   
+    this.listMeeting();
   }
-/*
   listMeeting(){
     this.ServiceService.getMettings().subscribe(
       res => {
@@ -27,5 +26,4 @@ export class InicioComponent implements OnInit {
       err => console.log(err)
     );
   }
-  */
 }
