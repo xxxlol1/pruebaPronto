@@ -1,1 +1,32 @@
-<p>add works!</p>
+<div class="container">
+    <p>AGREGAR MEETING</p>
+    <div class="row">
+        <div class="col-sm-6">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Hora del Meeting</label>
+                    <input [(ngModel)]="meeting.meetingTime!" type="time" name="meetingTime" id="meetingTime">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">ID de la persona</label>
+                    <input [(ngModel)]="meeting.userId!" type="number" name="userId" id="id">
+
+                </div>
+                <button (click)="agregarMeeting()" class="btn btn-primary">agregar meeting </button>
+
+            </form>
+        </div>
+        <div class="col-sm-6">
+
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">{{meeting.meetingTime}}</label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{meeting.userId}}</label>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -21,11 +21,11 @@ export class ServiceService {
 
   //Deleting Meetings
   deleteMeeting(id: string) {
-    return this.http.delete(this.url + '/' + id);
+    return this.http.delete(this.url + '/listmeeting/' + id);
   }
   //Adding Meetings
   addMeeting(meeting: Meeting) {
-    return this.http.post(this.url, meeting);
+    return this.http.post(this.url + '/agregar' , meeting);
   }
 
   //List of available
@@ -34,11 +34,16 @@ export class ServiceService {
   }
 
 
-
 }
 export interface Meeting {
-  meetingId?:string,
-  meetingTime?: Time,
-  availableTime?: Time,
-  userId?: string
+  meetingTime?: string,
+  userId?: string,
+
+}
+
+export interface Meeting2{
+  meetingId?: string,
+  name?: string,
+  meetingTime?: string
+
 }

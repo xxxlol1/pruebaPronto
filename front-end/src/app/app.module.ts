@@ -9,7 +9,9 @@ import { ModifyComponent } from './components/modify/modify.component';
 
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
-import { IndexComponent } from './components/index/index.component'
+import { IndexComponent } from './components/index/index.component';
+import { AvailableUsersComponent } from './components/available-users/available-users.component';
+import { AddUsersComponent } from './components/add-users/add-users.component'
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { IndexComponent } from './components/index/index.component'
     InicioComponent,
     AddComponent,
     ModifyComponent,
-    IndexComponent
+    IndexComponent,
+    AvailableUsersComponent,
+    AddUsersComponent
   ],
   imports: [
     BrowserModule,
