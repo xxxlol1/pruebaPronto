@@ -31,7 +31,7 @@ export class AddUsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.listUsers();
-    const params =this.activatedRoute.snapshot.params;
+    const params = this.activatedRoute.snapshot.params;
   }
 
   agregarUser() {
@@ -39,7 +39,6 @@ export class AddUsersComponent implements OnInit {
     this.UserSerivce.addUser(this.user).subscribe((res: any) => {
       this.listUsers();
     });
-
   }
 
   listUsers() {
@@ -47,17 +46,16 @@ export class AddUsersComponent implements OnInit {
       (res) => {
         this.ListMeeting = <any>res;
         this.ListMeeting2 = <any>res;
-        //console.log(this.ListMeeting2);
       },
       (err) => console.log(err)
     );
   }
   deleteUser(id: string) {
     this.UserSerivce.deleteUser(id).subscribe(
-      res =>{
+      (res) => {
         this.listUsers();
       },
-      err => console.log(err)
+      (err) => console.log(err)
     );
   }
 }

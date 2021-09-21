@@ -4,30 +4,21 @@ const db = require("../database/db");
 //--------------routes-----------------
 // RUTAS GET //
 
-
-
 // Meetings libres  - Revisar
 routes.get("/meetingA", (req, res) => {
-
-  const inicia = req.body.start;
   let query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId and (M.availableTime Between '21:00' and '22:00')  and (M.availableTime not Between '12:00' and '13:00'))`;
-
-  //query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId  and (M.availableTime Between '08:00' and '17:00') and (M.availableTime not Between '12:00' and '13:00'))`;
   db.query(query, (err, rows, req) => {
     if (err) {
-     
-      console.log(rows);
+    
       throw err;
     }
-   console.log("inicia:" + inicia);
     return res.status(200).json(rows);
   });
 });
 
 //Lista de meetings
 routes.get("/", (req, res) => {
-  let query =
-    "SELECT M.meetingId, U.name, M.meetingTime FROM users U INNER JOIN meetings M on  M.userId =  U.userId";
+  let query ="SELECT M.meetingId, U.name, M.meetingTime FROM users U INNER JOIN meetings M on  M.userId =  U.userId";
   db.query(query, (err, rows, req) => {
     if (err) {
       return res.status(400).json({ text: err });
@@ -64,8 +55,6 @@ routes.delete("/listmeeting/:id", (req, res) => {
 // RUTAS POST //
 // agregar meetings Revisar
 routes.post("/meeting", (req, res) => {
-  //db.query("INSERT INTO meetings set ?", [req.body]);
-  //return res.status(200).json({ text: "Meeting Creada" });
   const { meetingTime, userId, freeTime } = req.body;
   let query = `INSERT INTO meetings (meetingTime, userId, availableTime) VALUES ('${meetingTime}','${userId}', '${freeTime}')`;
   db.query(query, (err, rows, req) => {

@@ -35,8 +35,6 @@ export class AddComponent implements OnInit {
     meetingTime: '',
   };
 
-  //ListMeeting: Meeting[] = [];
-  //ListMeeting2: Meeting2[] = [];
   ListMeeting3: Meeting[] = [];
 
   constructor(
@@ -98,8 +96,7 @@ export class AddComponent implements OnInit {
     this.ServiceService.getMeetingId(id).subscribe(
       (res) => {
         console.log(res);
-        //this.ListMeeting = <any>res;
-        //this.ListMeeting2 = <any>res;
+
         this.ListMeeting3 = <any>res;
       },
       (err) => console.log(err)

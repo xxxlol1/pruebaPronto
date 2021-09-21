@@ -14,18 +14,16 @@ export class AvailableUsersComponent implements OnInit {
   constructor(private ServiceService: ServiceService) {}
   ngOnInit(): void {}
 
-
   available: Availables = {
-    start : '',
-    end : ''
-  }
+    start: '',
+    end: '',
+  };
 
   user: User = {
     userId: 0,
     name: '',
   };
   ListMeeting: User[] = [];
-
 
   getTime(time: any) {
     if (time.value !== '') {
@@ -38,16 +36,15 @@ export class AvailableUsersComponent implements OnInit {
   }
 
   getAvailableUsers() {
-
     this.ServiceService.getMeetingAvailable(this.available).subscribe(
-      res => {
+      (res) => {
         this.ListMeeting = <any>res;
-        console.log("meetings: ",this.ListMeeting);
+        console.log('meetings: ', this.ListMeeting);
       },
-      err => {
-        console.log("error");
-      }  
-    )
-    console.log("entre");
+      (err) => {
+        console.log('error');
+      }
+    );
+    console.log('entre');
   }
 }
