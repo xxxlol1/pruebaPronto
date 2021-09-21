@@ -1,32 +1,61 @@
 <div class="container">
-    <p>AGREGAR MEETING</p>
-    <div class="row">
-        <div class="col-sm-6">
-            <form>
-                <div class="mb-3">
-                    <label class="form-label">Hora del Meeting</label>
-                    <input [(ngModel)]="meeting.meetingTime!" type="time" name="meetingTime" id="meetingTime">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">ID de la persona</label>
-                    <input [(ngModel)]="meeting.userId!" type="number" name="userId" id="id">
-
-                </div>
-                <button (click)="agregarMeeting()" class="btn btn-primary">agregar meeting </button>
-
-            </form>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <form>
+            <label class="form-label center">Agregar Meeting</label>
+            <br />
+            <label class="form-label"
+              >Nombre del Usuario : {{ user.name }}
+            </label>
+            <label class="form-label">Hora del Meeting</label>
+            <br />
+            <input
+              [(ngModel)]="meeting.meetingTime"
+              type="time"
+              name="meetingTime"
+              id="meetingTime"
+            />
+            <br />
+            <br />
+            <button
+              (click)="agregarMeeting(meeting.userId!)"
+              class="btn btn-primary"
+            >
+              agregar meeting
+            </button>
+            <br />
+          </form>
         </div>
-        <div class="col-sm-6">
-
-            <form>
-                <div class="mb-3">
-                    <label class="form-label">{{meeting.meetingTime}}</label>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">{{meeting.userId}}</label>
-
-                </div>
-            </form>
-        </div>
+      </div>
     </div>
+
+    <div class="col-md-8">
+      <div class="table-wrapper-scroll-y">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">HORA DE MEETING</th>
+              <th scope="col">ELIMINAR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let meetings of  ListMeeting3"
+            >
+
+              <td>
+                {{ meetings.meetingTime }}
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger">ELIMINAR</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

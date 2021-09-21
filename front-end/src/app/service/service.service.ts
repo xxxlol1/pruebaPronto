@@ -25,6 +25,7 @@ export class ServiceService {
   }
   //Adding Meetings
   addMeeting(meeting: Meeting) {
+    console.log(meeting);
     return this.http.post(this.url + '/agregar' , meeting);
   }
 
@@ -38,12 +39,16 @@ export class ServiceService {
 export interface Meeting {
   meetingTime?: string,
   userId?: string,
-
 }
 
 export interface Meeting2{
   meetingId?: string,
   name?: string,
   meetingTime?: string
+}
 
+export interface User{
+  userId: number,
+  name?: string,
+  meetingTime?:string
 }

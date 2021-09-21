@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   UserServiceService,
   Usuario,
+  UsuarioName,
 } from 'src/app/service/user-service.service';
 
 @Component({
@@ -12,22 +13,50 @@ import {
 })
 export class AddUsersComponent implements OnInit {
   user: Usuario = {
-    //userId: '',
     name: '',
   };
 
+  username: UsuarioName = {
+    userId: '',
+  };
+
+  ListMeeting: Usuario[] = [];
+  ListMeeting2: UsuarioName[] = [];
+
   constructor(
     private UserSerivce: UserServiceService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.listUsers();
+    const params =this.activatedRoute.snapshot.params;
+  }
 
   agregarUser() {
-    // delete this.user.userId;
+    delete this.username.userId;
     this.UserSerivce.addUser(this.user).subscribe((res: any) => {
-      console.log(res.status);
     });
-    //this.router.navigate(['/index']);
+    //this.router.navigate(['/addusers']);
+  }
+
+  listUsers() {
+    this.UserSerivce.getUser().subscribe(
+      (res) => {
+        this.ListMeeting = <any>res;
+        this.ListMeeting2 = <any>res;
+        //console.log(this.ListMeeting2);
+      },
+      (err) => console.log(err)
+    );
+  }
+  deleteUser(id: string) {
+    this.UserSerivce.deleteUser(id).subscribe(
+      res =>{
+        this.listUsers();
+      },
+      err => console.log(err)
+    );
   }
 }
