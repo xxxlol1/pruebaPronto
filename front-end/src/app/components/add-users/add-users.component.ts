@@ -37,8 +37,9 @@ export class AddUsersComponent implements OnInit {
   agregarUser() {
     delete this.username.userId;
     this.UserSerivce.addUser(this.user).subscribe((res: any) => {
+      this.listUsers();
     });
-    //this.router.navigate(['/addusers']);
+
   }
 
   listUsers() {

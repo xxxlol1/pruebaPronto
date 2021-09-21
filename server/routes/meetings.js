@@ -4,18 +4,22 @@ const db = require("../database/db");
 //--------------routes-----------------
 // RUTAS GET //
 
+
+
 // Meetings libres  - Revisar
 routes.get("/meetingA", (req, res) => {
-  
-  const { inicia } = req.params;
-  const { termina } = req.params;
-  let query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId  and (M.availableTime Between '${inicia}' and '${inicia}') and (M.availableTime not Between '12:00' and '13:00'))`;
-   //query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId  and (M.availableTime Between '08:00' and '17:00') and (M.availableTime not Between '12:00' and '13:00'))`;
 
+  const inicia = req.body.start;
+  let query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId and (M.availableTime Between '21:00' and '22:00')  and (M.availableTime not Between '12:00' and '13:00'))`;
+
+  //query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId  and (M.availableTime Between '08:00' and '17:00') and (M.availableTime not Between '12:00' and '13:00'))`;
   db.query(query, (err, rows, req) => {
     if (err) {
+     
+      console.log(rows);
       throw err;
     }
+   console.log("inicia:" + inicia);
     return res.status(200).json(rows);
   });
 });
@@ -34,6 +38,7 @@ routes.get("/", (req, res) => {
 // enlista las meetings por usuario
 routes.get("/:id", (req, res) => {
   const { id } = req.params;
+  //console.log(id);
   let query =
     "SELECT userId, meetingId, meetingTime FROM meetings WHERE userId = ?";
   db.query(query, [id], (err, rows, req) => {
