@@ -26,18 +26,20 @@ export class ServiceService {
   //Adding Meetings
   addMeeting(meeting: Meeting) {
     console.log(meeting);
-    return this.http.post(this.url + '/agregar' , meeting);
+    return this.http.post(this.url + '/meeting' , meeting);
   }
 
   //List of available
-  getMeetingAvailable(available: any, finish: any) {
-    return this.http.post(this.url, available, finish);
+  getMeetingAvailable(data: any) {
+    return this.http.get(this.url + '/meetingA',data);
   }
 
 
 }
 export interface Meeting {
+  meetingId?: number, 
   meetingTime?: string,
+  freeTime?: string,
   userId?: string,
 }
 
@@ -51,4 +53,9 @@ export interface User{
   userId: number,
   name?: string,
   meetingTime?:string
+}
+
+export interface Availables{
+  start?: any,
+  end?: any;
 }

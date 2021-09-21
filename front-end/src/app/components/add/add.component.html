@@ -37,20 +37,18 @@
           <thead>
             <tr>
               <th scope="col">HORA DE MEETING</th>
-              <th scope="col">ELIMINAR</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            <tr
-              *ngFor="
-                let meetings of  ListMeeting3"
-            >
-
+            <tr *ngFor="let meetings of ListMeeting3">
               <td>
                 {{ meetings.meetingTime }}
               </td>
               <td>
-                <button type="button" class="btn btn-danger">ELIMINAR</button>
+                <button (click)="eliminarMeeting($event)" class="btn btn-danger"  id={{meetings.meetingId}}>
+                  ELIMINAR
+                </button>
               </td>
             </tr>
           </tbody>

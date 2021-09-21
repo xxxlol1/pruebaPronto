@@ -3,6 +3,23 @@ const db = require("../database/db");
 
 //--------------routes-----------------
 // RUTAS GET //
+
+// Meetings libres  - Revisar
+routes.get("/meetingA", (req, res) => {
+  
+  const { inicia } = req.params;
+  const { termina } = req.params;
+  let query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId  and (M.availableTime Between '${inicia}' and '${inicia}') and (M.availableTime not Between '12:00' and '13:00'))`;
+   //query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId  and (M.availableTime Between '08:00' and '17:00') and (M.availableTime not Between '12:00' and '13:00'))`;
+
+  db.query(query, (err, rows, req) => {
+    if (err) {
+      throw err;
+    }
+    return res.status(200).json(rows);
+  });
+});
+
 //Lista de meetings
 routes.get("/", (req, res) => {
   let query =
@@ -26,18 +43,7 @@ routes.get("/:id", (req, res) => {
     return res.status(200).json(rows);
   });
 });
-// Meetings libres  - Revisar
-routes.get("/meetingA", (req, res) => {
-  const { inicia } = req.body.start;
-  const { termina } = req.body.end;
-  let query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId  and (M.free_time Between ${inicia} and ${termina}) and (M.availableTime Between '08:00' and '17:00') and (M.availableTime not Between '12:00' and '13:00'))`;
-  db.query(query, (err, rows, req) => {
-    if (err) {
-      throw err;
-    }
-    return res.status(200).json(rows);
-  });
-});
+
 // RUTAS DELETE //
 // Delete meeting
 routes.delete("/listmeeting/:id", (req, res) => {
@@ -53,16 +59,16 @@ routes.delete("/listmeeting/:id", (req, res) => {
 // RUTAS POST //
 // agregar meetings Revisar
 routes.post("/meeting", (req, res) => {
-  db.query("INSERT INTO meetings set ?", [req.body]);
-  return res.status(200).json({ text: "Meeting Creada" });
-  /*const { meetingTime, userId } = req.body;
-  let query = `INSERT INTO meetings (meetingTime, userId) VALUES ('${meetingTime}','${userId}')`;
+  //db.query("INSERT INTO meetings set ?", [req.body]);
+  //return res.status(200).json({ text: "Meeting Creada" });
+  const { meetingTime, userId, freeTime } = req.body;
+  let query = `INSERT INTO meetings (meetingTime, userId, availableTime) VALUES ('${meetingTime}','${userId}', '${freeTime}')`;
   db.query(query, (err, rows, req) => {
     if (err) {
       throw err;
     }
     res.json("Meeting creada");
-  });*/
+  });
 });
 
 module.exports = routes;

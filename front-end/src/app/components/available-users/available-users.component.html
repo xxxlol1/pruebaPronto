@@ -1,1 +1,55 @@
-<p>available-users works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <form>
+            <label class="form-label center">Start time:</label>
+            <br />
+            <input
+              class="form-control"
+              type="time"
+              name="start"
+              [(ngModel)]="available.start"
+            />
+          </form>
+          <label class="form-label">End time:</label>
+          <br />
+          <input
+            class="form-control"
+            type="time"
+            name="end"
+            [(ngModel)]="available.end"
+          />
+          <br /><br />
+          <button
+            class="btn btn-outline-primary btn-block"
+            (click)="getAvailableUsers()"
+            type="button"
+          >
+            Buscar Meetings Disponibles
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="table-wrapper-scroll-y">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr class="text-center">
+              <th scope="col">Hora disponibles</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let meetings of ListMeeting" class="text-center">
+              <td> {{meetings.name}} </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
