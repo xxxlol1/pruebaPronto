@@ -15,7 +15,8 @@ Go to `cd front-end` and then run the server whit `npm start`.
 ## Views
 ![1](https://user-images.githubusercontent.com/23411606/134118600-e06652e8-c123-429c-94ed-1bf7ddbe1e4f.PNG)
 ![2](https://user-images.githubusercontent.com/23411606/134118603-7626bc18-317d-4804-aecd-5574b786c2d1.PNG)
-![3](https://user-images.githubusercontent.com/23411606/134118607-b1522d24-9de2-4d68-a079-e6af1ea88c0f.PNG)
+![image](https://user-images.githubusercontent.com/23411606/135655656-00f9294f-270d-424a-83a0-3219d3b2d9f0.png)
+
 
 ## SQL SCRIPT
 ![image](https://user-images.githubusercontent.com/23411606/134114494-7aced616-64d5-487e-bce5-856fe5636820.png)
