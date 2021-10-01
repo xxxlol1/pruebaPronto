@@ -36,6 +36,7 @@ export class AddUsersComponent implements OnInit {
 
   agregarUser() {
     delete this.username.userId;
+    console.log(this.user);
     this.UserSerivce.addUser(this.user).subscribe((res: any) => {
       this.listUsers();
     });

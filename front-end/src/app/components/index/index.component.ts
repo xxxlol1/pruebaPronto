@@ -23,7 +23,7 @@ export class IndexComponent implements OnInit {
   listMeeting() {
     this.ServiceService.getMettings().subscribe(
       (res) => {
-        console.log(res);
+       // console.log(res);
         this.ListMeeting = <any>res;
         this.ListMeeting2 = <any>res;
       },

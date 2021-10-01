@@ -23,6 +23,7 @@ export class AvailableUsersComponent implements OnInit {
     userId: 0,
     name: '',
   };
+
   ListMeeting: User[] = [];
 
   getTime(time: any) {
@@ -39,12 +40,19 @@ export class AvailableUsersComponent implements OnInit {
     this.ServiceService.getMeetingAvailable(this.available).subscribe(
       (res) => {
         this.ListMeeting = <any>res;
-        console.log('meetings: ', this.ListMeeting);
+
+        console.log('meetings: ', res);
       },
       (err) => {
         console.log('error');
       }
     );
-    console.log('entre');
+  }
+  getMeetingFormat() {
+    this.ServiceService.getMeetingFormat().subscribe((res) => {
+      this.ListMeeting = <any>res;
+    },
+    
+    );
   }
 }

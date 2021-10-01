@@ -1,15 +1,59 @@
 const routes = require("express").Router();
 const db = require("../database/db");
+const fs = require("fs");
 
+const obj = {};
+const meetings = [];
 //--------------routes-----------------
 // RUTAS GET //
+routes.get("/meetingFormat", (req, res) => {
+  let query = `SELECT availableTime, name FROM meetings M, users U where U.userId = M.userId;`;
+  db.query(query, (err, rows, req) => {
+    rows.forEach((element) => {
+      if (!meetings.includes(element.availableTime)) {
+        meetings.push(element.availableTime);
+      }
+    });
+
+    meetings.forEach((meet) => {
+      let arrayNames = [];
+      rows.forEach((element) => {
+        if (element.availableTime == meet) {
+          arrayNames.push(element.name);
+          arrayNames.sort();
+        }
+      });
+      obj[meet] = arrayNames;
+    });
+
+    if (err) {
+      throw err;
+    }
+
+    res.status(200).json(obj);
+
+    const saveData = (obj) => {
+      const finished = (error) => {
+        if (error) {
+          console.error(error);
+          return;
+        }
+      };
+      const jsonData = JSON.stringify(obj);
+      fs.writeFile("output.json", jsonData, finished);
+    };
+    saveData(obj);
+  });
+});
 
 // Meetings libres  - Revisar
-routes.get("/meetingA", (req, res) => {
-  let query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId and (M.availableTime Between '21:00' and '22:00')  and (M.availableTime not Between '12:00' and '13:00'))`;
+routes.post("/meetingA", (req, res) => {
+  //console.log("body: ", req.body);
+  const start = req.body.start;
+  const end = req.body.end;
+  let query = `Select * from users U where not exists (Select 1 from meetings M where U.userId = M.userId and (M.availableTime Between '${start}' and '${end}') and (M.availableTime Between '08:00' and '17:00') and (M.availableTime not Between '12:00' and '13:00'))`;
   db.query(query, (err, rows, req) => {
     if (err) {
-    
       throw err;
     }
     return res.status(200).json(rows);
@@ -18,7 +62,8 @@ routes.get("/meetingA", (req, res) => {
 
 //Lista de meetings
 routes.get("/", (req, res) => {
-  let query ="SELECT M.meetingId, U.name, M.meetingTime FROM users U INNER JOIN meetings M on  M.userId =  U.userId";
+  let query =
+    "SELECT M.meetingId, U.name, M.meetingTime FROM users U INNER JOIN meetings M on  M.userId =  U.userId";
   db.query(query, (err, rows, req) => {
     if (err) {
       return res.status(400).json({ text: err });

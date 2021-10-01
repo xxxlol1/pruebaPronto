@@ -30,12 +30,14 @@ routes.get("/usuarios", (req, res) => {
 // guardar usuarios
 routes.post("/agregarusuario", (req, res) => {
   const { name } = req.body;
+  console.log(req.body);
   let query = `INSERT INTO  users (name) VALUES ('${name}') `;
   db.query(query, (err, rows, req) => {
     if (err) {
       // Usuario Duplicado
       return res.status(400).json({ text: "Usuario Ya Registrado" });
     }
+
     return res.status(201).json({ text: "Usuario Registrado" });
   });
 });

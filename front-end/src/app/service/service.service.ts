@@ -8,7 +8,10 @@ import { Time } from '@angular/common';
 export class ServiceService {
   url = '/api';
   constructor(private http: HttpClient) { }
-
+  // meeting format
+  getMeetingFormat(){
+    return this.http.get(this.url + '/meetingFormat');
+  }
   //Get meetings
   getMettings() {
     return this.http.get(this.url);
@@ -31,8 +34,10 @@ export class ServiceService {
 
   //List of available
   getMeetingAvailable(data: any) {
-    return this.http.get(this.url + '/meetingA',data);
+    console.log("data:",data)
+    return this.http.post(this.url + '/meetingA',data);
   }
+
 
 
 }

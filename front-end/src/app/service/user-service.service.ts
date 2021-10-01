@@ -18,7 +18,7 @@ export class UserServiceService {
   }
   //Adding usuarios
   addUser(user: Usuario) {
-
+    console.log("usuario:" + user);
     return this.http.post(this.url + '/agregarusuario', user);
 
   }
