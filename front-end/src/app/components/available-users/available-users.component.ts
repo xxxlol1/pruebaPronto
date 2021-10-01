@@ -51,6 +51,7 @@ export class AvailableUsersComponent implements OnInit {
   getMeetingFormat() {
     this.ServiceService.getMeetingFormat().subscribe((res) => {
       this.ListMeeting = <any>res;
+      
     },
     
     );

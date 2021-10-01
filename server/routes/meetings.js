@@ -1,48 +1,112 @@
 const routes = require("express").Router();
 const db = require("../database/db");
 const fs = require("fs");
+const e = require("express");
 
 const obj = {};
 const meetings = [];
 //--------------routes-----------------
 // RUTAS GET //
+
+const saveData = (meetsDisponibles) => {
+  const finished = (error) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+  };
+  const jsonData = JSON.stringify(meetsDisponibles);
+  fs.writeFile("output.json", jsonData, finished);
+  console.log(" >> Archivo output.json Creado!")
+};
+
 routes.get("/meetingFormat", (req, res) => {
-  let query = `SELECT availableTime, name FROM meetings M, users U where U.userId = M.userId;`;
+  let query = `SELECT meetingTime, name FROM meetings M, users U where U.userId = M.userId;`;
+  let actualUser = "";
+  let meets = {};
+  let arrmeets = [];
   db.query(query, (err, rows, req) => {
     rows.forEach((element) => {
-      if (!meetings.includes(element.availableTime)) {
-        meetings.push(element.availableTime);
+      if (actualUser == "") {
+        actualUser = element.name;
+        arrmeets.push(element.meetingTime);
+        meets[actualUser] = [element.meetingTime];
+      } else if (actualUser != element.name) {
+        meets[actualUser] = arrmeets;
+        actualUser = element.name;
+        arrmeets = [];
+      } else {
+        arrmeets.push(element.meetingTime);
       }
     });
 
-    meetings.forEach((meet) => {
-      let arrayNames = [];
-      rows.forEach((element) => {
-        if (element.availableTime == meet) {
-          arrayNames.push(element.name);
-          arrayNames.sort();
+    Object.keys(meets).forEach((key) => {
+      let horariosDisponibles = [
+        "08:00:00",
+        "08:30:00",
+        "09:00:00",
+        "09:30:00",
+        "10:00:00",
+        "10:30:00",
+        "11:00:00",
+        "11:30:00",
+        "13:00:00",
+        "13:30:00",
+        "14:00:00",
+        "14:30:00",
+        "15:00:00",
+        "15:30:00",
+        "16:00:00",
+        "16:30:00",
+        "17:00:00",
+        "17:30:00",
+      ];
+      let aux = meets[key];
+
+      aux.forEach((meet) => {
+        const index = horariosDisponibles.indexOf(meet);
+        if (index > -1) {
+          horariosDisponibles.splice(index, 1);
         }
       });
-      obj[meet] = arrayNames;
+
+      meets[key] = horariosDisponibles;
     });
 
-    if (err) {
-      throw err;
-    }
-
-    res.status(200).json(obj);
-
-    const saveData = (obj) => {
-      const finished = (error) => {
-        if (error) {
-          console.error(error);
-          return;
-        }
-      };
-      const jsonData = JSON.stringify(obj);
-      fs.writeFile("output.json", jsonData, finished);
+    let meetsDisponibles = {
+      "08:00:00": [],
+      "08:30:00": [],
+      "09:00:00": [],
+      "09:30:00": [],
+      "10:00:00": [],
+      "10:30:00": [],
+      "11:00:00": [],
+      "11:30:00": [],
+      "13:00:00": [],
+      "13:30:00": [],
+      "14:00:00": [],
+      "14:30:00": [],
+      "15:00:00": [],
+      "15:30:00": [],
+      "16:00:00": [],
+      "16:30:00": [],
+      "17:00:00": [],
+      "17:30:00": [],
     };
-    saveData(obj);
+
+    Object.keys(meetsDisponibles).forEach((key) => {
+      let auxArr = [];
+      Object.keys(meets).forEach((kname) => {
+        if (meets[kname].includes(key)) {
+          auxArr.push(kname);
+        }
+      });
+      meetsDisponibles[key] = auxArr;
+    });
+    saveData(meetsDisponibles);
+
+    res.status(200).json(meetsDisponibles);
+
   });
 });
 
