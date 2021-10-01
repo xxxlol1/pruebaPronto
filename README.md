@@ -1,7 +1,8 @@
 # PruebaPronto
 Coding Challenge
 
-## Instalattion
+## Instalattion of Package
+Go to the server and front end server directory and run the package command installation: `npm install`
 
 Starting running server:
 
@@ -18,6 +19,11 @@ Go to `cd front-end` and then run the server whit `npm start`.
 
 ## SQL SCRIPT
 ![image](https://user-images.githubusercontent.com/23411606/134114494-7aced616-64d5-487e-bce5-856fe5636820.png)
+
+## DATABASE INSTALLATION
+For the project to work without any problems, you need to create the database with their respective tables. MySQL is used for the database and the Script is in the folder called "sql" so that the database can be created
+![image](https://user-images.githubusercontent.com/23411606/135655209-fc367bc7-a2db-4a11-849f-a81fe8c1ec6c.png)
+
 
 ## TOOLS
  Name | Description |
