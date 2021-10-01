@@ -8,7 +8,7 @@ Starting running server:
 
 Go to `cd server` and then run the server whit `npm run dev`.
 
-Starting running Front-Enb:
+Starting running Front-End:
 
 Go to `cd front-end` and then run the server whit `npm start`.
 
