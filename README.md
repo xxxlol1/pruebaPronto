@@ -25,6 +25,10 @@ Go to `cd front-end` and then run the server whit `npm start`.
 For the project to work without any problems, you need to create the database with their respective tables. MySQL is used for the database and the Script is in the folder called "sql" so that the database can be created
 ![image](https://user-images.githubusercontent.com/23411606/135655209-fc367bc7-a2db-4a11-849f-a81fe8c1ec6c.png)
 
+## Available users exported in a JSON file 
+A JSON file is created showing all available users from 8 a.m. to 5 p.m.
+![image](https://user-images.githubusercontent.com/23411606/135656360-5e1a82d5-2d42-4017-8eeb-293116c228c8.png)
+
 
 ## TOOLS
  Name | Description |
